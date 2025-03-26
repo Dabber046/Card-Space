@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -74,6 +74,16 @@ def add_card():
 def get_price(name):
     import random
     return jsonify({"price": round(random.uniform(1, 300), 2)})
+
+# Serve React frontend build
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve(path):
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../client/dist"))
+    if path != "" and os.path.exists(os.path.join(root_dir, path)):
+        return send_from_directory(root_dir, path)
+    else:
+        return send_from_directory(root_dir, "index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
