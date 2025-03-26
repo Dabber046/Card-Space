@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  @apply transition-colors duration-500 bg-gradient-to-br from-purple-950 via-black to-purple-900 text-white;
+}
+
+nav {
+  @apply bg-purple-900 text-white px-6 py-4 flex justify-between items-center shadow-lg rounded-b-2xl;
+}
+
+nav a {
+  @apply text-white hover:text-purple-300 transition font-semibold;
+}
+
+.app-container {
+  @apply p-6 max-w-4xl mx-auto;
+}
+
+.auth-form input,
+.auth-form button {
+  @apply w-full p-3 my-2 rounded-lg border border-purple-800 bg-purple-950 text-white;
+}
+
+.dashboard input {
+  @apply w-full p-3 border border-purple-700 rounded-lg shadow bg-black text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition text-lg;
+}
+
+ul {
+  @apply space-y-3;
+}
+
+li {
+  @apply flex justify-between items-center p-4 rounded-xl shadow-lg bg-purple-800 text-white border border-purple-700;
+}
+
+.charizard {
+  @apply bg-gradient-to-r from-yellow-500 via-red-500 to-orange-500 text-black font-bold border-2 border-yellow-300 animate-pulse;
+}
+
+button {
+  @apply px-4 py-2 rounded-lg text-white bg-purple-700 hover:bg-purple-600 transition-all shadow-md;
+}
+
+button:hover {
+  @apply scale-105 shadow-xl;
+}
