@@ -19,19 +19,6 @@ nav a {
   @apply text-white hover:text-purple-300 transition font-semibold;
 }
 
-.app-container {
-  @apply p-6 max-w-4xl mx-auto;
-}
-
-.auth-form input,
-.auth-form button {
-  @apply w-full p-3 my-2 rounded-lg border border-purple-800 bg-purple-950 text-white;
-}
-
-.dashboard input {
-  @apply w-full p-3 border border-purple-700 rounded-lg shadow bg-black text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition text-lg;
-}
-
 ul {
   @apply space-y-3;
 }
