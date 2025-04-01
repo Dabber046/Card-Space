@@ -1,4 +1,4 @@
-// client\src\purple-black-index.css
+// client/postcss.config.js
 module.exports = {
   plugins: {
     tailwindcss: {},
