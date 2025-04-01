@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 body {
   font-family: 'Inter', sans-serif;
-  @apply transition-colors duration-500 bg-gradient-to-br from-purple-950 via-black to-purple-900 text-white;
+  background: linear-gradient(to bottom right, #2e1065, #000000, #3b0764);
+  color: white;
+  transition: background-color 0.5s, color 0.5s;
 }
 
 nav {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
-import './style.css'
+import './styles/main.css'
 
-const App = () => {
+  const App = () => {
   const [query, setQuery] = useState('')
   const [cards, setCards] = useState([])
   const [myCards, setMyCards] = useState([])
