@@ -1,4 +1,3 @@
-// src/pages/MyCards.jsx
 import React, { useEffect, useState } from 'react';
 
 const MyCards = () => {
@@ -14,7 +13,7 @@ const MyCards = () => {
       <h1 className="text-3xl font-bold text-center mb-6">Your Saved Cards</h1>
       <div className="flex flex-wrap justify-center gap-4">
         {myCards.length === 0 ? (
-          <p className="text-purple-300 text-center">No cards yet! Add some from the home page.</p>
+          <p className="text-purple-300">No cards yet! Add some from the home page.</p>
         ) : (
           myCards.map(card => (
             <div key={card.id} className="border border-purple-700 p-4 rounded-xl w-40 bg-purple-800 text-white shadow-md">
