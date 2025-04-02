@@ -1,12 +1,13 @@
 import React from 'react';
 
-const MyCards = ({ cards = [], removeCard }) => {
+const Profile = ({ cards = [], removeCard }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-black to-purple-900 text-white p-6">
-      <h1 className="text-3xl font-bold text-center mb-8">Your Saved Pokémon Cards</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Your Profile</h1>
+      <p className="text-center text-purple-300 mb-8">View your saved Pokémon cards here.</p>
 
       {cards.length === 0 ? (
-        <p className="text-center text-purple-300">No cards saved yet. Head to Home and add some!</p>
+        <p className="text-center text-purple-400">You haven't saved any cards yet.</p>
       ) : (
         <div className="flex flex-wrap justify-center gap-6">
           {cards.map((card) => (
@@ -36,4 +37,4 @@ const MyCards = ({ cards = [], removeCard }) => {
   );
 };
 
-export default MyCards;
+export default Profile;

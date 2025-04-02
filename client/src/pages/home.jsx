@@ -8,20 +8,26 @@ const Home = ({ addToMyCards }) => {
   const [cards, setCards] = useState([]);
 
   const searchCards = async () => {
-    const res = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:${searchQuery}`);
-    const data = await res.json();
-    setCards(data.data);
+    try {
+      const res = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:${searchQuery}`);
+      const data = await res.json();
+      setCards(data.data || []);
+    } catch (err) {
+      console.error('Failed to fetch cards:', err);
+    }
   };
 
   const addCustomCard = () => {
     const name = customCardName.trim();
-    const image = customImageUrl.trim() || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png';
+    const image =
+      customImageUrl.trim() ||
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png';
     if (!name) return;
 
     const customCard = {
       id: `manual-${Date.now()}`,
       name,
-      images: { small: image }
+      images: { small: image },
     };
 
     addToMyCards(customCard);
@@ -38,6 +44,7 @@ const Home = ({ addToMyCards }) => {
         <div className="flex-1">
           <h1 className="text-3xl font-bold text-center mb-6">Pokémon Card Tracker</h1>
 
+          {/* Search */}
           <div className="flex justify-center mb-10">
             <div className="flex flex-col items-center space-y-4 w-full max-w-md">
               <input
@@ -55,6 +62,7 @@ const Home = ({ addToMyCards }) => {
             </div>
           </div>
 
+          {/* Add Custom Card */}
           <div className="flex justify-center mb-12">
             <div className="flex flex-col items-center space-y-4 w-full max-w-md">
               <input
@@ -78,14 +86,22 @@ const Home = ({ addToMyCards }) => {
             </div>
           </div>
 
+          {/* Card Results */}
           <div className="flex flex-wrap justify-center gap-4">
-            {cards.map(card => (
-              <div key={card.id} className="border border-purple-700 p-4 rounded-xl w-40 bg-purple-800 text-white shadow-md">
-                <img src={card.images.small} alt={card.name} className="w-full rounded-lg" />
-                <p className="mt-2">{card.name}</p>
+            {cards.map((card) => (
+              <div
+                key={card.id}
+                className="border border-purple-700 p-4 rounded-xl w-40 bg-purple-800 text-white shadow-md"
+              >
+                <img
+                  src={card.images.small}
+                  alt={card.name}
+                  className="w-full rounded-lg"
+                />
+                <p className="mt-2 text-center">{card.name}</p>
                 <button
                   onClick={() => addToMyCards(card)}
-                  className="mt-2 px-3 py-1 bg-purple-600 hover:bg-purple-500 rounded text-sm"
+                  className="mt-2 px-3 py-1 bg-purple-600 hover:bg-purple-500 rounded text-sm w-full"
                 >
                   Add to My Cards
                 </button>
