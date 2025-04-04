@@ -87,3 +87,45 @@ def serve(path):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/api/cards", methods=["POST"])
+@token_required
+def save_card():
+    data = request.json
+    card = {
+        "user_id": request.user["_id"],
+        "name": data["name"],
+        "image": data["image"],
+        "price": data.get("price", 0),
+        "favorite": False
+    }
+    result = cards.insert_one(card)
+    return jsonify({"message": "Card saved", "id": str(result.inserted_id)}), 201
+
+@app.route("/api/cards", methods=["GET"])
+@token_required
+def get_cards():
+    user_cards = list(cards.find({"user_id": request.user["_id"]}))
+    for card in user_cards:
+        card["_id"] = str(card["_id"])
+        card["user_id"] = str(card["user_id"])
+    return jsonify(user_cards)
+
+@app.route("/api/cards/<card_id>/favorite", methods=["PATCH"])
+@token_required
+def toggle_favorite(card_id):
+    card = cards.find_one({"_id": ObjectId(card_id), "user_id": request.user["_id"]})
+    if not card:
+        return jsonify({"message": "Card not found"}), 404
+    new_favorite_status = not card.get("favorite", False)
+    cards.update_one({"_id": ObjectId(card_id)}, {"$set": {"favorite": new_favorite_status}})
+    return jsonify({"favorite": new_favorite_status})
+
+@app.route("/api/profile", methods=["GET"])
+@token_required
+def get_profile():
+    user = request.user
+    return jsonify({
+        "id": str(user["_id"]),
+        "email": user["email"]
+    })
