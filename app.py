@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify, send_from_directory
-from flask_cors import CORS
+from flask import Flask, request, jsonify, send_from_directory 
+from flask_cors import CORS 
 from pymongo import MongoClient
-from bson.objectid import ObjectId
-import jwt
-import bcrypt
+from bson.objectid import ObjectId 
+import jwt 
+import bcrypt 
 import datetime
-from dotenv import load_dotenv
+from dotenv import load_dotenv 
 import os
 
 load_dotenv()
