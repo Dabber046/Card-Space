@@ -13,7 +13,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-client = MongoClient("mongodb://localhost:27017")
+client = MongoClient(os.getenv("MONGO_URI"))
 db = client.pokemon_tracker
 users = db.users
 cards = db.cards

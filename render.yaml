@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: pokemon-card-tracker
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
