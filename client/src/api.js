@@ -11,7 +11,7 @@ export const apiFetch = async (endpoint, options = {}) => {
     ...options.headers,
   };
 
-  const res = await fetch(\`\${API_BASE}\${endpoint}\`, {
+  const res = await fetch(`${API_BASE}${endpoint}`, {
     ...options,
     headers,
   });
@@ -45,4 +45,4 @@ export const saveCard = (card) =>
 
 export const getCards = () => apiFetch("/cards");
 export const toggleFavorite = (cardId) =>
-  apiFetch(\`/cards/\${cardId}/favorite\`, { method: "PATCH" });
+  apiFetch(`/cards/${cardId}/favorite`, { method: "PATCH" });
