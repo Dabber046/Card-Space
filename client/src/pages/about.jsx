@@ -1,17 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function About() {
+const About = () => {
+  const [feedback, setFeedback] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Thanks for your feedback: "${feedback}"`);
+    setFeedback('');
+  };
+
   return (
-    <div className="max-w-3xl mx-auto mt-10 px-6">
-      <h1 className="text-4xl font-bold text-purple-300 mb-4">About This App</h1>
-      <p className="text-lg text-gray-300 mb-6">
-        The Pokémon Card Tracker is a full-stack app that allows users to save their Pokémon cards,
-        track live prices, and manage their collection with ease.
+    <div className="max-w-3xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-4">About This App</h1>
+      <p className="mb-4 text-lg">
+        This app helps you search, track, and collect Pokémon cards. You can favorite cards, add notes, and see live prices!
       </p>
-      <p className="text-gray-400">
-        Built with React, Flask, MongoDB, and Tailwind CSS. Designed to be fast, responsive, and
-        visually engaging.
-      </p>
+
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-zinc-800 p-4 rounded shadow-md">
+        <label className="block mb-2 font-semibold">Have ideas or feedback?</label>
+        <textarea
+          className="w-full p-2 border rounded mb-2"
+          placeholder="Tell us what you think..."
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
-}
+};
+
+export default About;

@@ -1,9 +1,22 @@
-// server/index.js or routes/someRoute.js
-const client = require('./db/connect');
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
 
-async function doSomethingWithDB() {
-  await client.connect();
-  const db = client.db("your-db-name");
-  const cards = await db.collection("cards").find().toArray();
-  console.log(cards);
-}
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use('/api', require('./routes/auth')); // 👈 Login route
+
+// Connect to Mongo
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch((err) => console.error(err));
+
+// Start server
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
