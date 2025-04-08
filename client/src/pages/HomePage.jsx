@@ -65,7 +65,6 @@ const HomePage = () => {
       <div className="hidden lg:flex flex-col gap-6 fixed left-4 top-24 z-10">
         {leftPokemon.map((id, index) => (
           <div key={`left-${index}`} className="flex items-center gap-2">
-            {/* Pokéballs Row */}
             <div className="flex gap-1">
               {Array.from({ length: 3 }).map((_, i) => (
                 <img
@@ -76,7 +75,6 @@ const HomePage = () => {
                 />
               ))}
             </div>
-            {/* Pokémon Sprite */}
             <img
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
               alt={`pokemon-${id}`}
@@ -92,7 +90,6 @@ const HomePage = () => {
       <div className="hidden lg:flex flex-col gap-6 fixed right-4 top-24 z-10">
         {rightPokemon.map((id, index) => (
           <div key={`right-${index}`} className="flex items-center gap-2 flex-row-reverse">
-            {/* Pokéballs Row */}
             <div className="flex gap-1">
               {Array.from({ length: 3 }).map((_, i) => (
                 <img
@@ -103,7 +100,6 @@ const HomePage = () => {
                 />
               ))}
             </div>
-            {/* Pokémon Sprite */}
             <img
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
               alt={`pokemon-${id}`}
@@ -180,7 +176,7 @@ const HomePage = () => {
 
       {/* 🧾 My Cards */}
       <h2 id="mycards" className="text-2xl font-semibold text-center mt-12 mb-4 text-white">My Cards</h2>
-      <div className="cards flex flex-wrap justify-center gap-4 z-10">
+      <div className="cards flex flex-wrap justify-center gap-4 z-10 mb-12">
         {myCards.map(card => (
           <div key={card.id} className="card border border-purple-700 p-4 rounded-xl w-40 bg-purple-800 text-white shadow-md">
             <img src={card.images.small} alt={card.name} className="w-full rounded-lg" />
@@ -188,6 +184,45 @@ const HomePage = () => {
           </div>
         ))}
       </div>
+
+      {/* 🎖️ Bottom Row: Pokémon + Pokéballs + Master Balls */}
+      <div className="w-full flex flex-wrap justify-center items-center gap-6 px-4 py-6 bg-black bg-opacity-30 rounded-t-3xl z-0">
+        {['25', '1', '4', '7', '150'].map((id) => (
+          <img
+            key={`bottom-poke-${id}`}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+            alt={`pokemon-${id}`}
+            className="w-10 h-10 hover:scale-110 transition transform"
+          />
+        ))}
+
+        {[ 'poke-ball', 'great-ball', 'ultra-ball', 'master-ball', 'premier-ball', 'luxury-ball' ].map((ball, i) => (
+          <img
+            key={`ball-type-${i}`}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${ball}.png`}
+            alt={ball}
+            className="w-8 h-8 hover:scale-110 transition transform"
+            title={ball.replace('-', ' ').replace(/\b\w/g, c => c.toUpperCase())}
+          />
+        ))}
+
+        {Array.from({ length: 3 }).map((_, i) => (
+          <img
+            key={`masterball-${i}`}
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png"
+            alt="Master Ball"
+            className="w-8 h-8 animate-spin-slow hover:scale-110 transition"
+          />
+        ))}
+      </div>
+
+      {/* 🌀 Floating Pokéball Animation */}
+      <img
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+        alt="Floating Pokéball"
+        className="fixed w-20 h-20 opacity-60 animate-float z-0 pointer-events-none"
+        style={{ top: '10%', left: '5%' }}
+      />
     </div>
   );
 };

@@ -91,3 +91,14 @@ button:hover {
 .card:hover {
   @apply scale-105 shadow-2xl transition duration-300;
 }
+@keyframes floatAround {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(50px, 30px) rotate(15deg); }
+  50%  { transform: translate(30px, 60px) rotate(30deg); }
+  75%  { transform: translate(-40px, 30px) rotate(15deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.animate-float {
+  animation: floatAround 14s ease-in-out infinite;
+}
