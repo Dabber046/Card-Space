@@ -4,8 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
+/* 🌌 Base App Theme */
 body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(to bottom right, #2e1065, #000000, #3b0764);
@@ -13,30 +12,82 @@ body {
   transition: background-color 0.5s, color 0.5s;
 }
 
+/* 🧭 Navigation */
 nav {
   @apply bg-purple-900 text-white px-6 py-4 flex justify-between items-center shadow-lg rounded-b-2xl;
 }
-
 nav a {
   @apply text-white hover:text-purple-300 transition font-semibold;
 }
 
+/* 📝 Lists */
 ul {
   @apply space-y-3;
 }
-
 li {
   @apply flex justify-between items-center p-4 rounded-xl shadow-lg bg-purple-800 text-white border border-purple-700;
 }
 
+/* 🔥 Special Card Styling */
 .charizard {
   @apply bg-gradient-to-r from-yellow-500 via-red-500 to-orange-500 text-black font-bold border-2 border-yellow-300 animate-pulse;
 }
 
+/* 🎮 Buttons */
 button {
   @apply px-4 py-2 rounded-lg text-white bg-purple-700 hover:bg-purple-600 transition-all shadow-md;
 }
-
 button:hover {
   @apply scale-105 shadow-xl;
+}
+
+/* 💫 Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* ⚡ Optional: Type-Themed Backgrounds */
+.bg-fire { background: linear-gradient(to right, #ff7f0e, #ff3300); }
+.bg-water { background: linear-gradient(to right, #00bfff, #0077ff); }
+.bg-electric { background: linear-gradient(to right, #fcd34d, #facc15); }
+.bg-grass { background: linear-gradient(to right, #38b000, #70e000); }
+.bg-psychic { background: linear-gradient(to right, #ff69b4, #c71585); }
+
+/* 🧠 Optional: Typing effect class for headers */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+.typing-text {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid white;
+  animation: typing 2.5s steps(40, end);
+}
+
+/* 🎴 Card Hover FX */
+.card:hover {
+  @apply scale-105 shadow-2xl transition duration-300;
 }

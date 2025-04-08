@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
+
+const getRandomPokemonIds = () => {
+  const nums = new Set();
+  while (nums.size < 5) {
+    nums.add(Math.floor(Math.random() * 151) + 1); // Gen 1
+  }
+  return Array.from(nums);
+};
+
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [customCardName, setCustomCardName] = useState('');
   const [customImageUrl, setCustomImageUrl] = useState('');
   const [cards, setCards] = useState([]);
   const [myCards, setMyCards] = useState([]);
+  const [leftPokemon, setLeftPokemon] = useState([]);
+  const [rightPokemon, setRightPokemon] = useState([]);
 
   useEffect(() => {
     const saved = localStorage.getItem('myCards');
     if (saved) setMyCards(JSON.parse(saved));
+
+    setLeftPokemon(getRandomPokemonIds());
+    setRightPokemon(getRandomPokemonIds());
   }, []);
 
   useEffect(() => {
@@ -45,11 +59,69 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-center mb-6">Pokémon Card Tracker</h1>
+    <div className="relative flex flex-col items-center px-4">
+
+      {/* 🎨 Random Pokémon Sprites + Pokéballs Left */}
+      <div className="hidden lg:flex flex-col gap-6 fixed left-4 top-24 z-10">
+        {leftPokemon.map((id, index) => (
+          <div key={`left-${index}`} className="flex items-center gap-2">
+            {/* Pokéballs Row */}
+            <div className="flex gap-1">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <img
+                  key={`pokeball-left-${index}-${i}`}
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+                  alt="Pokéball"
+                  className="w-5 h-5 animate-spin-slow"
+                />
+              ))}
+            </div>
+            {/* Pokémon Sprite */}
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+              alt={`pokemon-${id}`}
+              title={`Pokémon #${id}`}
+              className="w-12 h-12 animate-bounce hover:scale-125 cursor-pointer transition"
+              onClick={() => alert(`Pokémon ID: ${id} (Pokédex coming soon!)`)}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* 🎨 Random Pokémon Sprites + Pokéballs Right */}
+      <div className="hidden lg:flex flex-col gap-6 fixed right-4 top-24 z-10">
+        {rightPokemon.map((id, index) => (
+          <div key={`right-${index}`} className="flex items-center gap-2 flex-row-reverse">
+            {/* Pokéballs Row */}
+            <div className="flex gap-1">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <img
+                  key={`pokeball-right-${index}-${i}`}
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+                  alt="Pokéball"
+                  className="w-5 h-5 animate-pulse"
+                />
+              ))}
+            </div>
+            {/* Pokémon Sprite */}
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+              alt={`pokemon-${id}`}
+              title={`Pokémon #${id}`}
+              className="w-12 h-12 animate-pulse hover:scale-125 cursor-pointer transition"
+              onClick={() => alert(`Pokémon ID: ${id} (Pokédex coming soon!)`)}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* 🧢 Header */}
+      <h1 className="text-4xl font-extrabold text-center mb-6 text-white drop-shadow">
+        Pokémon Card Tracker
+      </h1>
 
       {/* 🔍 Search Cards */}
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-10 z-10">
         <div className="flex flex-col items-center space-y-4 w-full max-w-md">
           <input
             className="w-full p-3 rounded-lg border border-purple-700 shadow bg-white text-black placeholder-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
@@ -67,7 +139,7 @@ const HomePage = () => {
       </div>
 
       {/* ➕ Manually Add Cards */}
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-12 z-10">
         <div className="flex flex-col items-center space-y-4 w-full max-w-md">
           <input
             className="w-full p-3 rounded-lg border border-purple-700 shadow bg-white text-black placeholder-purple-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
@@ -91,14 +163,14 @@ const HomePage = () => {
       </div>
 
       {/* 📋 Search Results */}
-      <div className="cards flex flex-wrap justify-center gap-4">
+      <div className="cards flex flex-wrap justify-center gap-4 z-10">
         {cards.map(card => (
           <div key={card.id} className="card border border-purple-700 p-4 rounded-xl w-40 bg-purple-800 text-white shadow-md hover:shadow-xl transition">
             <img src={card.images.small} alt={card.name} className="w-full rounded-lg" />
-            <p className="mt-2">{card.name}</p>
+            <p className="mt-2 text-center">{card.name}</p>
             <button
               onClick={() => addToMyCards(card)}
-              className="mt-2 px-3 py-1 bg-purple-600 hover:bg-purple-500 rounded text-sm"
+              className="mt-2 px-3 py-1 bg-purple-600 hover:bg-purple-500 rounded text-sm w-full"
             >
               Add to My Cards
             </button>
@@ -107,12 +179,12 @@ const HomePage = () => {
       </div>
 
       {/* 🧾 My Cards */}
-      <h2 id="mycards" className="text-2xl font-semibold text-center mt-12 mb-4">My Cards</h2>
-      <div className="cards flex flex-wrap justify-center gap-4">
+      <h2 id="mycards" className="text-2xl font-semibold text-center mt-12 mb-4 text-white">My Cards</h2>
+      <div className="cards flex flex-wrap justify-center gap-4 z-10">
         {myCards.map(card => (
           <div key={card.id} className="card border border-purple-700 p-4 rounded-xl w-40 bg-purple-800 text-white shadow-md">
             <img src={card.images.small} alt={card.name} className="w-full rounded-lg" />
-            <p className="mt-2">{card.name}</p>
+            <p className="mt-2 text-center">{card.name}</p>
           </div>
         ))}
       </div>

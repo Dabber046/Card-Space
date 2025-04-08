@@ -1,16 +1,46 @@
 import React from 'react';
-import { XCircle } from 'lucide-react'; // Optional: for nicer remove icon if you're using lucide
+import { XCircle } from 'lucide-react';
 
 const Profile = ({ cards = [], removeCard }) => {
+  const pokeballs = Array.from({ length: 5 });
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-black to-purple-900 text-white p-6">
-      <h1 className="text-4xl font-extrabold text-center mb-4">Your Pokémon Profile</h1>
-      <p className="text-center text-purple-300 text-lg mb-10">
+    <div className="relative min-h-screen bg-gradient-to-br from-purple-950 via-black to-purple-900 text-white p-6">
+
+      {/* 🎨 Pokéballs Left Side */}
+      <div className="hidden lg:flex flex-col gap-6 fixed left-4 top-28 z-10">
+        {pokeballs.map((_, index) => (
+          <img
+            key={`poke-left-${index}`}
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+            alt="Pokéball"
+            className="w-10 h-10 animate-spin-slow hover:scale-110 transition duration-300"
+          />
+        ))}
+      </div>
+
+      {/* 🎨 Pokéballs Right Side */}
+      <div className="hidden lg:flex flex-col gap-6 fixed right-4 top-28 z-10">
+        {pokeballs.map((_, index) => (
+          <img
+            key={`poke-right-${index}`}
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+            alt="Pokéball"
+            className="w-10 h-10 animate-pulse hover:scale-110 transition duration-300"
+          />
+        ))}
+      </div>
+
+      {/* 🔖 Page Header */}
+      <h1 className="text-4xl font-extrabold text-center mb-4 animate-fade-in drop-shadow-xl">
+        Your Pokémon Profile
+      </h1>
+      <p className="text-center text-purple-300 text-lg mb-10 animate-fade-in">
         Here are all the cards you've saved to your collection!
       </p>
 
       {cards.length === 0 ? (
-        <p className="text-center text-purple-400 text-lg mt-10">
+        <p className="text-center text-purple-400 text-lg mt-10 animate-fade-in">
           You haven't saved any cards yet. Start collecting now!
         </p>
       ) : (
@@ -18,7 +48,9 @@ const Profile = ({ cards = [], removeCard }) => {
           {cards.map((card) => (
             <div
               key={card.id}
-              className="relative group bg-purple-800 border border-purple-700 rounded-xl shadow-lg p-4 w-44 transform transition-transform hover:scale-105 hover:shadow-2xl"
+              className={`relative group bg-purple-800 border border-purple-700 rounded-xl shadow-lg p-4 w-44 transform transition-transform hover:scale-105 hover:shadow-2xl ${
+                card.name?.toLowerCase().includes('charizard') ? 'charizard' : ''
+              }`}
             >
               <img
                 src={

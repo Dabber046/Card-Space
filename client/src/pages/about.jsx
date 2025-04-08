@@ -10,23 +10,37 @@ const About = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">About This App</h1>
-      <p className="mb-4 text-lg">
+    <div className="relative max-w-3xl mx-auto p-6 text-white">
+      {/* 🎨 Floating Pikachu */}
+      <img
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+        alt="Pikachu"
+        className="absolute top-4 right-6 w-16 h-16 animate-bounce hidden sm:block"
+      />
+
+      {/* 🔥 Glowing Header */}
+      <h1 className="text-4xl font-extrabold mb-4 text-center text-white drop-shadow-lg animate-fade-in">
+        About This App
+      </h1>
+      <p className="mb-6 text-lg text-center text-purple-200">
         This app helps you search, track, and collect Pokémon cards. You can favorite cards, add notes, and see live prices!
       </p>
 
-      <form onSubmit={handleSubmit} className="bg-white dark:bg-zinc-800 p-4 rounded shadow-md">
-        <label className="block mb-2 font-semibold">Have ideas or feedback?</label>
+      {/* 💬 Feedback Form */}
+      <form
+        onSubmit={handleSubmit}
+        className="bg-purple-900 bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-purple-700 space-y-4 animate-fade-in"
+      >
+        <label className="block font-semibold text-white text-lg">Have ideas or feedback?</label>
         <textarea
-          className="w-full p-2 border rounded mb-2"
+          className="w-full h-28 p-3 rounded-lg border border-purple-500 bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
           placeholder="Tell us what you think..."
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-green-600 hover:bg-green-500 transition px-6 py-2 text-white font-semibold rounded-lg shadow-md"
         >
           Submit
         </button>

@@ -10,9 +10,7 @@ const Layout = () => {
         <Link to="/" className="hover:text-purple-300 transition">Home</Link>
         <Link to="/about" className="hover:text-purple-300 transition">About</Link>
         <Link to="/my-cards" className="hover:text-purple-300 transition">My Cards</Link>
-        <Link to="/favorites" className="hover:text-purple-300 transition">Favorites</Link>
         <Link to="/profile" className="hover:text-purple-300 transition">Profile</Link>
-        <Link to="/settings" className="hover:text-purple-300 transition">Settings</Link>
         <Link to="/login" className="hover:text-purple-300 transition">Login</Link>
         <Link to="/register" className="hover:text-purple-300 transition">Register</Link>
       </nav>
