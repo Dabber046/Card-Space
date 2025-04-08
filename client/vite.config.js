@@ -10,6 +10,11 @@ export default defineConfig({
         target: 'http://localhost:5000',
         changeOrigin: true
       }
-    }
+    },
+    fs: {
+      strict: false
+    },
+   
+    historyApiFallback: true
   }
 });
