@@ -45,3 +45,5 @@ This project includes both the frontend (React + Tailwind) and the backend (Flas
 6. Click deploy and your app will be live!
 
 You can edit `render.yaml` or `.env.example` for future changes.
+
+This is a work in progress so this will be updated as i go along. 
