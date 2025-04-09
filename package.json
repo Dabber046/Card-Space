@@ -1,9 +1,9 @@
 {
-    "name": "pokemon-card-tracker-fullstack",
+    "name": "pokemon-fullstack-app",
     "version": "1.0.0",
     "private": true,
     "scripts": {
-      "build": "cd client && npm install && npm run build"
+      "render-build": "cd client && npm ci && npx vite build"
     }
   }
   
