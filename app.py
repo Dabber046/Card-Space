@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify, send_from_directory 
-from flask_cors import CORS 
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 from pymongo import MongoClient
-from bson.objectid import ObjectId 
-import jwt 
-import bcrypt 
+from bson.objectid import ObjectId
+import jwt
+import bcrypt
 import datetime
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
 import os
 
 load_dotenv()
@@ -13,12 +13,15 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+# MongoDB setup
 client = MongoClient(os.getenv("MONGO_URI"))
 db = client.pokemon_tracker
 users = db.users
 cards = db.cards
+
 SECRET = os.getenv("JWT_SECRET", "devsecret")
 
+# JWT decorator
 def token_required(f):
     def wrap(*args, **kwargs):
         token = request.headers.get("Authorization", "").replace("Bearer ", "")
@@ -34,6 +37,7 @@ def token_required(f):
     wrap.__name__ = f.__name__
     return wrap
 
+# Authentication Routes
 @app.route("/api/register", methods=["POST"])
 def register():
     data = request.json
@@ -48,46 +52,14 @@ def login():
     data = request.json
     user = users.find_one({"email": data["email"]})
     if user and bcrypt.checkpw(data["password"].encode(), user["password"]):
-        token = jwt.encode({"id": str(user["_id"]), "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)}, SECRET)
+        token = jwt.encode({
+            "id": str(user["_id"]),
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+        }, SECRET)
         return jsonify({"token": token})
     return jsonify({"message": "Invalid credentials"}), 401
 
-@app.route("/api/cards", methods=["GET"])
-@token_required
-def get_cards():
-    user_id = str(request.user["_id"])
-    user_cards = list(cards.find({"userId": user_id}))
-    for c in user_cards:
-        c["id"] = str(c["_id"])
-        del c["_id"]
-    return jsonify(user_cards)
-
-@app.route("/api/cards", methods=["POST"])
-@token_required
-def add_card():
-    data = request.json
-    card = {"name": data["name"], "userId": str(request.user["_id"])}
-    result = cards.insert_one(card)
-    return jsonify({"id": str(result.inserted_id)})
-
-@app.route("/api/price/<name>")
-def get_price(name):
-    import random
-    return jsonify({"price": round(random.uniform(1, 300), 2)})
-
-# Serve React frontend build
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def serve(path):
-    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../client/dist"))
-    if path != "" and os.path.exists(os.path.join(root_dir, path)):
-        return send_from_directory(root_dir, path)
-    else:
-        return send_from_directory(root_dir, "index.html")
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
+# Card Routes
 @app.route("/api/cards", methods=["POST"])
 @token_required
 def save_card():
@@ -121,6 +93,7 @@ def toggle_favorite(card_id):
     cards.update_one({"_id": ObjectId(card_id)}, {"$set": {"favorite": new_favorite_status}})
     return jsonify({"favorite": new_favorite_status})
 
+# Profile Route
 @app.route("/api/profile", methods=["GET"])
 @token_required
 def get_profile():
@@ -129,3 +102,23 @@ def get_profile():
         "id": str(user["_id"]),
         "email": user["email"]
     })
+
+# Price endpoint (mock)
+@app.route("/api/price/<name>")
+def get_price(name):
+    import random
+    return jsonify({"price": round(random.uniform(1, 300), 2)})
+
+# Serve React build (Vite output)
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve(path):
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "client/dist"))
+    if path != "" and os.path.exists(os.path.join(root_dir, path)):
+        return send_from_directory(root_dir, path)
+    else:
+        return send_from_directory(root_dir, "index.html")
+
+# Run the app
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=os.environ.get("PORT", 5000))
