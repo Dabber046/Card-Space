@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './src/styles/main.css';
+import '@/styles/main.css'; // ✅ alias import
 
-import Layout from './src/components/layout';
-import HomePage from './src/pages/HomePage';
-import About from './src/pages/About';
-import CardDetails from './src/pages/CardDetails';
-import Login from './src/pages/Login';
-import Register from './src/pages/Register';
-import MyCards from './src/pages/MyCards';
-import Profile from './src/pages/Profile';
-import PokemonGallery from './src/pages/PokemonGallery';
+import Layout from '@/components/Layout';
+import HomePage from '@/pages/HomePage';
+import About from '@/pages/About';
+import CardDetails from '@/pages/CardDetails';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import MyCards from '@/pages/MyCards';
+import Profile from '@/pages/Profile';
+import PokemonGallery from '@/pages/PokemonGallery';
 
 function App() {
   return (
