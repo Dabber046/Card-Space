@@ -13,6 +13,7 @@ const Layout = () => {
         <Link to="/profile" className="hover:text-purple-300 transition">Profile</Link>
         <Link to="/login" className="hover:text-purple-300 transition">Login</Link>
         <Link to="/register" className="hover:text-purple-300 transition">Register</Link>
+        <Link to="/pokemon" className="hover:text-yellow-400 transition">Pokémon</Link>
       </nav>
 
       <Outlet />

@@ -1,9 +1,8 @@
-// App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './src/styles/main.css';
 
-import Layout from './src/components/Layout'; // Capitalized correctly
+import Layout from './src/components/Layout';
 import HomePage from './src/pages/HomePage';
 import About from './src/pages/About';
 import CardDetails from './src/pages/CardDetails';
@@ -11,6 +10,7 @@ import Login from './src/pages/Login';
 import Register from './src/pages/Register';
 import MyCards from './src/pages/MyCards';
 import Profile from './src/pages/Profile';
+import PokemonGallery from './src/pages/PokemonGallery'; // 👈 New import
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="my-cards" element={<MyCards />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="pokemon" element={<PokemonGallery />} /> {/* 👈 New route */}
         </Route>
       </Routes>
     </Router>
