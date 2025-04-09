@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ Added for redirect
 
 const getRandomPokemonIds = () => {
   const nums = new Set();
@@ -16,6 +17,8 @@ const HomePage = () => {
   const [myCards, setMyCards] = useState([]);
   const [leftPokemon, setLeftPokemon] = useState([]);
   const [rightPokemon, setRightPokemon] = useState([]);
+
+  const navigate = useNavigate(); // ✅ Setup navigate
 
   useEffect(() => {
     const saved = localStorage.getItem('myCards');
@@ -37,7 +40,9 @@ const HomePage = () => {
 
   const addToMyCards = (card) => {
     if (!myCards.some(c => c.id === card.id)) {
-      setMyCards([...myCards, card]);
+      const updatedCards = [...myCards, card];
+      setMyCards(updatedCards);
+      navigate('/my-cards'); // ✅ Redirect after adding
     }
   };
 
@@ -52,16 +57,15 @@ const HomePage = () => {
       images: { small: image }
     };
 
-    addToMyCards(customCard);
+    addToMyCards(customCard); // ✅ Reuse logic
     setCustomCardName('');
     setCustomImageUrl('');
-    alert(`Added "${name}" to your cards!`);
   };
 
   return (
     <div className="relative flex flex-col items-center px-4">
 
-      {/* 🎨 Random Pokémon Sprites + Pokéballs Left */}
+      {/* 🎨 Left Pokémon Column */}
       <div className="hidden lg:flex flex-col gap-6 fixed left-4 top-24 z-10">
         {leftPokemon.map((id, index) => (
           <div key={`left-${index}`} className="flex items-center gap-2">
@@ -86,7 +90,7 @@ const HomePage = () => {
         ))}
       </div>
 
-      {/* 🎨 Random Pokémon Sprites + Pokéballs Right */}
+      {/* 🎨 Right Pokémon Column */}
       <div className="hidden lg:flex flex-col gap-6 fixed right-4 top-24 z-10">
         {rightPokemon.map((id, index) => (
           <div key={`right-${index}`} className="flex items-center gap-2 flex-row-reverse">
@@ -185,7 +189,7 @@ const HomePage = () => {
         ))}
       </div>
 
-      {/* 🎖️ Bottom Row: Pokémon + Pokéballs + Master Balls */}
+      {/* 🎖️ Bottom Pokéballs and Pokémon */}
       <div className="w-full flex flex-wrap justify-center items-center gap-6 px-4 py-6 bg-black bg-opacity-30 rounded-t-3xl z-0">
         {['25', '1', '4', '7', '150'].map((id) => (
           <img
