@@ -10,7 +10,7 @@ import os
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="client/dist", static_url_path="")
 CORS(app)
 
 # MongoDB setup
@@ -109,16 +109,15 @@ def get_price(name):
     import random
     return jsonify({"price": round(random.uniform(1, 300), 2)})
 
-# Serve React build (Vite output)
+# Serve React App
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
-def serve(path):
-    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "client/dist"))
-    if path != "" and os.path.exists(os.path.join(root_dir, path)):
-        return send_from_directory(root_dir, path)
+def serve_vue(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
     else:
-        return send_from_directory(root_dir, "index.html")
+        return send_from_directory(app.static_folder, "index.html")
 
-# Run the app
+# For local testing
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
